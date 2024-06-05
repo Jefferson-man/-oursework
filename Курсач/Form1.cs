@@ -22,6 +22,7 @@ namespace Курсач
 
         private void Button_array_to_File_Click(object sender, EventArgs e)
         {
+            // выбор файла
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 
@@ -29,18 +30,22 @@ namespace Курсач
             {
                 try
                 {
+                    // чтение файла
                     string line = File.ReadAllText(openFileDialog.FileName);
 
+                    // проверка на пустоту
                     if (string.IsNullOrWhiteSpace(line))
                     {
                         MessageBox.Show("Файл пуст.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-
+                    
+                    // преобразовал файла в массив целых
                     string[] numbers = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     int[] array = Array.ConvertAll(numbers, int.Parse);
                     sortArray.setArray(array);
-
+                    
+                    // обновление таблиц
                     UpdateDataGridView(array);
                 }
                 catch (Exception ex)
@@ -54,10 +59,11 @@ namespace Курсач
         {
             try
             {
+                // чтение размера массива из текстового поля
                 int size = int.Parse(size_Array.Text);
                 Random random = new Random();
                 int[] array = new int[size];
-                for (int i = 0; i < size; i++)
+                for (int i = 0; i < size; i++) 
                 {
                     array[i] = random.Next(100);
                 }
